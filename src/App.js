@@ -36,6 +36,7 @@ function App() {
 
   useEffect(() => {
     if (showAllSaved) {
+      setImageUrls([]);
       listAll(imagesListRef).then((response) => {
         response.items.forEach((item) => {
           getDownloadURL(item).then((url) => {
