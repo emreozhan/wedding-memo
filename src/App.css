@@ -1,12 +1,66 @@
 .App {
-  width: 100vw;
+  width: 98vw;
+  max-height: 1778px;
   height: auto;
+  margin-top: -10px;
+  margin-left: -10px;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
-
+body {
+  background-color: rgba(123, 171, 209, 255);
+  max-height: 95vh;
+}
 img {
-  width: 300px;
+  width: 30%;
   margin: 10px;
+}
+
+.memo-bg {
+  height: 100%;
+  width: auto;
+  position: absolute;
+  z-index: -1;
+  margin-top: -20px;
+  margin-left: -6px;
+}
+
+.memos-button {
+  width: Hug (126px);
+  height: Hug (32px);
+  padding: 5px 16px 5px 16px;
+  border-radius: 15px;
+  border: 1px;
+  gap: 8px;
+  color: aliceblue;
+  background-color: #337ccf;
+  border: 1px;
+  border-color: rgba(24, 144, 255, 1);
+  box-shadow: rgba(0, 0, 0, 0.043);
+}
+
+.top-menu {
+  position: fixed;
+  bottom: 10%;
+}
+.bottom-menu {
+  position: fixed;
+  bottom: 5%;
+}
+
+.w100 {
+  width: 100%;
+}
+.grid-center {
+  margin: 5px;
+  display: grid;
+  justify-items: center;
+}
+.file-input > input {
+  background-color: aquamarine;
+}
+
+.memo-carousel {
+  width: 60%;
 }
