@@ -20,7 +20,7 @@ function App() {
   const [imageUrls, setImageUrls] = useState([]);
   const [showAllSaved, setShowAllSaved] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [uploadCount, setUploadCount] = useState(0);
   const imagesListRef = ref(storage, "images/");
 
   const spinner = () => {
@@ -50,12 +50,23 @@ function App() {
 
     setLoading(true);
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      // getDownloadURL(snapshot.ref).then((url) => {
-      //   setImageUrls((prev) => [...prev, url]);
-      // });
-      setLoading(false);
-    });
+    uploadBytes(imageRef, imageUpload)
+      .then((snapshot) => {
+        // getDownloadURL(snapshot.ref).then((url) => {
+        //   setImageUrls((prev) => [...prev, url]);
+        // });
+        console.log(snapshot);
+
+        if (snapshot) {
+          alert("Fotoğraf Başarıyla Kaydedildi !");
+        } else {
+          alert("Bir hata oluştu tekrar deneyiniz");
+        }
+      })
+      .finally((exx) => {
+        setLoading(false);
+        setUploadCount(uploadCount + 1);
+      });
   };
 
   useEffect(() => {
@@ -94,6 +105,7 @@ function App() {
               console.log(event.target.files[0]);
               setImageUpload(event.target.files[0]);
             }}
+            key={uploadCount}
           />
           {/**<CustomWebcam captureMethod={captureByCustomWebCam}></CustomWebcam>*/}{" "}
           <button onClick={uploadFile} className="memos-button">
