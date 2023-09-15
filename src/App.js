@@ -13,24 +13,48 @@ import CustomWebcam from "./CustomWebCam";
 import ReactDOM from "react-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { Hearts } from "react-loader-spinner";
 
 function App() {
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const [showAllSaved, setShowAllSaved] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const imagesListRef = ref(storage, "images/");
+
+  const spinner = () => {
+    return (
+      loading && (
+        <div className="spinner">
+          <Hearts
+            height="180"
+            width="180"
+            color="#C51104"
+            ariaLabel="hearts-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
+      )
+    );
+  };
+
   const captureByCustomWebCam = (img) => {
     console.log(img);
     setImageUpload(img);
   };
   const uploadFile = () => {
     if (imageUpload == null) return;
+
+    setLoading(true);
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        setImageUrls((prev) => [...prev, url]);
-      });
+      // getDownloadURL(snapshot.ref).then((url) => {
+      //   setImageUrls((prev) => [...prev, url]);
+      // });
+      setLoading(false);
     });
   };
 
@@ -50,11 +74,18 @@ function App() {
   return (
     <div className="App">
       <img
+        className="memo-bg"
         src={process.env.REACT_APP_WEDDING_BG_IMAGE}
-        className="memo-bg "
         alt="❤️"
       />
+
+      {spinner()}
       <div className="bottom-menu">
+        <div>
+          <p className="basic-text">
+            Anılarınızı Bizimle Paylaşabilirsiniz 💍❤️💍
+          </p>
+        </div>
         <div>
           <input
             type="file"
@@ -69,22 +100,27 @@ function App() {
             Foto Paylaş
           </button>
         </div>
-        <div className="w100 grid-center">
-          <button
-            onClick={() => {
-              setShowAllSaved(showAllSaved ? false : true);
-            }}
-            className="memos-button"
+        {
+          <div
+            style={{ visibility: process.env.REACT_APP_admin }}
+            className="w100 grid-center"
           >
-            Paylaşımların Hepsini {showAllSaved ? "gizle" : "göster"}
-          </button>
-        </div>
+            <button
+              onClick={() => {
+                setShowAllSaved(showAllSaved ? false : true);
+              }}
+              className="memos-button"
+            >
+              Paylaşımların Hepsini {showAllSaved ? "gizle" : "göster"}
+            </button>
+          </div>
+        }
       </div>
       <div className="memo-carousel">
         {showAllSaved && (
-          <Carousel>
+          <Carousel showArrows={true}>
             {imageUrls.map((url) => {
-              return <img height="100%" width="100%" key={v4()} src={url} />;
+              return <img height="70%" width="100%" key={v4()} src={url} />;
             })}
           </Carousel>
         )}
