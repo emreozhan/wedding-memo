@@ -83,7 +83,7 @@ function App() {
       <div className="bottom-menu">
         <div>
           <p className="basic-text">
-            Anılarınızı Bizimle Paylaşabilirsiniz 💍❤️💍
+            Anılarınızı Bizimle Paylaşabilirsiniz 💍❤️
           </p>
         </div>
         <div>
